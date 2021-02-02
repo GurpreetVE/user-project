@@ -20,7 +20,7 @@ class User extends Controller
 
     public function listing() {
         return view('admin.user.list', ['title' => 'user', 'list' => $this->service->listing()]);
-    }
+    } 
     
      public function create() {
         
