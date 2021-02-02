@@ -21,6 +21,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::middleware(["auth"])->group(function($route) {
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        $route->prefix('users')->group(function() use ($route) {            
+        $route->get('/', 'App\Http\Controllers\User@listing')->name('user.list');
+        $route->post('/', 'App\Http\Controllers\User@store')->name('user.store');
+        $route->get('{id}', 'App\Http\Controllers\User@view')->name('user.view');
+        $route->put('{id}', 'App\Http\Controllers\User@put')->name('user.put');
+        $route->delete('{id}', 'App\Http\Controllers\User@delete')->name('user.delete');
+        $route->get('/create', 'App\Http\Controllers\User@create')->name('user.create');
+    });
+    
+});
